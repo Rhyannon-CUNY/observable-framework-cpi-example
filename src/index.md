@@ -1,5 +1,27 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+</style>`
 ```js
 const monthToMonth = await FileAttachment("month-to-month.json").json({typed: true}).then(data => {
+  // Loop through the data and return a polished up, trimmed down version
+  return data.map(d => {
+    return {
+      month: new Date(d.date),
+      change: d.change
+    }
+  });
+});
+```
+```js
+const monthlyFood = await FileAttachment("monthly-food.json").json({typed: true}).then(data => {
   // Loop through the data and return a polished up, trimmed down version
   return data.map(d => {
     return {
@@ -32,7 +54,41 @@ Plot.plot({
     Plot.barY(monthToMonth, {
         x: "month",
         y: "change",
-        fill: "steelblue",
+        // fill: "orange",
+        dx:2,
+        dy:2,
+        tip: true
+    }),
+    Plot.barY(monthToMonth, {
+        x: "month",
+        y: "change",
+        fill: "orange",
+        dx: -2,
+        dy: -1,
+        tip: true
+    })
+  ],
+  x: {label: null},
+  y: {label: "Percent Change", tickFormat: d => `${d}%`}
+})
+```
+```js
+Plot.plot({
+  title: "One-month percent change in CPI for Food for All Urban Consumers (CPI-U), seasonally adjusted",
+  marks: [
+    Plot.barY(monthlyFood, {
+        x: "month",
+        y: "change",
+        dx:2,
+        dy:2,
+        tip: true
+    }),
+    Plot.barY(monthlyFood, {
+        x: "month",
+        y: "change",
+        fill: "green",
+        dx: -2,
+        dy: -1,
         tip: true
     })
   ],
