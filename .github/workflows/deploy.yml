@@ -20,22 +20,22 @@ jobs:
         name: Checkout
         uses: actions/checkout@v4
       
-      - id: install-pipenv
-        name: Install pipenv
-        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-        shell: bash
-
-      - id: install-python-dependencies
-        name: Install Python dependencies
-        run: pipenv sync --dev
-        shell: bash
-      
       - id: setup-python
         name: Setup Python
         uses: actions/setup-python@v5
         with: 
-          python-version: '3.11'
+          python-version: '3.9'
           cache: 'pipenv'
+      
+      - id: install-pipenv
+        name: Install pipenv
+        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+        shell: bash
+      
+      - id: install-python-dependencies
+        name: Install Python dependencies
+        run: pipenv sync --dev
+        shell: bash
         
       - id: install-nodejs-dependencies
         name: Install Node.JS dependencies
