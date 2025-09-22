@@ -33,11 +33,17 @@ const monthlyFood = await FileAttachment("monthly-food.json").json({typed: true}
 ```
 ```js
 const yearOverYear = await FileAttachment("year-over-year.json").json({typed: true}).then(data => {
+  console.log(data)
+  const nameLookup = {
+    "CUUR0000SA0": "All items",
+    "CUUR0000SA0L1E":"All items except food and energy"
+  }
   return data.map(d => {
     return {
       month: new Date(d.date),
       change: d.change,
-      series_items_name: d.series_items_name
+      series_id: d.series_id,
+      series_items_name: nameLookup[d.series_id],
     }
   });
 });
@@ -54,7 +60,6 @@ Plot.plot({
     Plot.barY(monthToMonth, {
         x: "month",
         y: "change",
-        // fill: "orange",
         dx:2,
         dy:2,
         tip: true
@@ -72,6 +77,8 @@ Plot.plot({
   y: {label: "Percent Change", tickFormat: d => `${d}%`}
 })
 ```
+Food prices for all urban consumers (CPI-U) ${describe(latestFood.change)} on a seasonally
+adjusted basis, after it ${describe(previousFood.change)} in ${d3.utcFormat("%B")(previousFood.month)}.
 ```js
 Plot.plot({
   title: "One-month percent change in CPI for Food for All Urban Consumers (CPI-U), seasonally adjusted",
@@ -86,7 +93,7 @@ Plot.plot({
     Plot.barY(monthlyFood, {
         x: "month",
         y: "change",
-        fill: "green",
+        fill: "turquoise",
         dx: -2,
         dy: -1,
         tip: true
@@ -110,8 +117,13 @@ const describe = (change) => {
 }
 ```
 ```js
-const latestAllItems = yearOverYear.filter(d => d.series_items_name === "All items").at(-1);
-const latestCore = yearOverYear.filter(d => d.series_items_name === "All items less food and energy").at(-1);
+const latestFood = monthlyFood.at(-1);
+const previousFood = monthlyFood.at(-2);
+```
+```js
+const latestAllItems = yearOverYear.filter(d => d.series_id === "CUUR0000SA0").at(-1);
+const latestCore = yearOverYear.filter(d => d.series_id === "CUUR0000SA0L1E").at(-1);
+console.log("yearOverYear", yearOverYear)
 ```
 
 Over the last 12 months, the all items index ${describe(latestAllItems.change)} before seasonal adjustment. The index for all items less food and energy ${describe(latestCore.change)}.

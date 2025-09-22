@@ -119,11 +119,11 @@
         },
         "cpi": {
             "hashes": [
-                "sha256:351eb41bf570455538e3bb9919a0955e982dc36856652f65be4fb248bd13acb2",
-                "sha256:6d0f83fa96ece1b1095556ea99305e03822723894e4f3061e08a328e321eb18e"
+                "sha256:61809e5cd0d7d6b6f1f2ca18aa2d2c77b5f5b076c71b65e248f7eebdff35cb26",
+                "sha256:7fbea1b9404f88f38336f499b7c29528f6d5ae29d9ad9028e155ad992d52c793"
             ],
             "index": "pypi",
-            "version": "==2.0.7"
+            "version": "==2.0.8"
         },
         "idna": {
             "hashes": [
