@@ -93,7 +93,7 @@ Plot.plot({
     Plot.barY(monthlyFood, {
         x: "month",
         y: "change",
-        fill: "turquoise",
+        fill: "pink",
         dx: -2,
         dy: -1,
         tip: true
